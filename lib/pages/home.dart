@@ -58,11 +58,21 @@ class _HomePageState extends State<HomePage> {
                       return [
                         const PopupMenuItem(
                           value: 'delete',
-                          child: Text('DELETE'),
+                          child: Row(
+                            children: [
+                              Icon(Icons.delete_forever),
+                              Text(' DELETE'),
+                            ],
+                          ),
                         ),
                         const PopupMenuItem(
                           value: 'edit',
-                          child: Text('EDIT'),
+                          child: Row(
+                            children: [
+                              Icon(Icons.edit_note),
+                              Text(' EDIT'),
+                            ],
+                          ),
                         )
                       ];
                     }));

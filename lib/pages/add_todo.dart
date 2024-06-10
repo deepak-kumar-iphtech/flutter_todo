@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/pages/home.dart';
 import 'package:http/http.dart' as http;
 
 class AddTodo extends StatefulWidget {
@@ -17,7 +16,9 @@ class _AddTodoState extends State<AddTodo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("ADD TODO"),
+      ),
       backgroundColor: const Color.fromARGB(255, 57, 57, 57),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -80,9 +81,12 @@ class _AddTodoState extends State<AddTodo> {
     if (response.statusCode == 201) {
       titleControler.text = '';
       decsriptionControler.text = '';
+
       // ignore: use_build_context_synchronously
       Navigator.pop(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+        // ignore: use_build_context_synchronously
+        context,
+      );
     } else {
       //print('error');
     }
