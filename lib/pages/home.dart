@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isLoading = false;
+  bool isLoading = true;
   List<Item> items = [];
   @override
   void initState() {
@@ -22,12 +22,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //print("build");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "TODO APP",
-          style: TextStyle(color: Colors.white),
         ),
       ),
       backgroundColor: const Color.fromARGB(255, 57, 57, 57),
@@ -40,42 +38,62 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 final item = items[index];
                 final id = item.id;
-                return ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.black,
-                      child: Text(
-                        '${index + 1}',
-                        //style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    title: Text(item.title),
-                    subtitle: Text(item.description),
-                    trailing: PopupMenuButton(onSelected: (value) {
-                      if (value == 'delete') {
-                        deleteById(id);
-                      } else if (value == 'edit') {}
-                    }, itemBuilder: (value) {
-                      return [
-                        const PopupMenuItem(
-                          value: 'delete',
-                          child: Row(
-                            children: [
-                              Icon(Icons.delete_forever),
-                              Text(' DELETE'),
-                            ],
-                          ),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
+                  child: Card(
+                      elevation: 7.0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CircleAvatar(
+                              child: Text('${index + 1}'),
+                            ),
+                            const SizedBox(
+                              width: 16.0,
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                //crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    item.title,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Text(
+                                    item.description,
+                                    style: const TextStyle(
+                                        fontSize: 12.0, color: Colors.grey),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      deleteById(id);
+                                    },
+                                    icon: const Icon(Icons.delete_forever)),
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.edit_note))
+                              ],
+                            )
+                          ],
                         ),
-                        const PopupMenuItem(
-                          value: 'edit',
-                          child: Row(
-                            children: [
-                              Icon(Icons.edit_note),
-                              Text(' EDIT'),
-                            ],
-                          ),
-                        )
-                      ];
-                    }));
+                      )),
+                );
               }),
         ),
         child: const Center(child: CircularProgressIndicator()),
@@ -97,9 +115,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchTodo() async {
-    setState(() {
-      isLoading = true;
-    });
+    // setState(() {
+    //   isLoading = true;
+    // });
     final result = await ItemAPI.fetchTodo();
     setState(() {
       items = result;

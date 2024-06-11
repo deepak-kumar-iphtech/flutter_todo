@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AddTodo extends StatefulWidget {
-  const AddTodo({super.key});
+  final Map? todo;
+  const AddTodo({super.key, this.todo});
 
   @override
   State<AddTodo> createState() => _AddTodoState();
@@ -17,7 +18,7 @@ class _AddTodoState extends State<AddTodo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ADD TODO"),
+        title: const Text("ADD TODO"),
       ),
       backgroundColor: const Color.fromARGB(255, 57, 57, 57),
       body: Padding(
